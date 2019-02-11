@@ -3,7 +3,7 @@ const app = express();
 const getCachedSensorReadings = require('./get-cached-sensor-readings');
 
 app.get('/temperature', function(req, res) {
-  res.send(getCachedSensorReadings.getTemperature().toFixed(1) + '°C');
+  res.send('<strong>' + getCachedSensorReadings.getTemperature().toFixed(1) + '</strong>' + '°C');
 });
 
 app.get('/humidity', function(req, res) {
