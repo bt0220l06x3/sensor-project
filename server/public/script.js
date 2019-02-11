@@ -10,8 +10,7 @@ console.log('Executing client side javascript...');
     function
     */
     const fetchTemperature = () => {
-      
-      
+      fetch('/humidity')   
         .then(results => {
           return results.text();
         })
