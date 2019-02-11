@@ -6,7 +6,7 @@
     function as an argument.
     */
     const getSensorReadings = (callback) => {
-       sensor.read(11, 4, function (err, temperature,
+       sensor.read(22, 4, function (err, temperature,
      humidity) {
          if (err) {
            /*
