@@ -5,25 +5,42 @@ console.log('Executing client side javascript...');
     little weird if you're seeing it for the first time, but    
     it's an improvement over callbacks.
     */
+    /*
+    We put the code for fetching temperature in its own 
+    function
+    */
+    const fetchTemperature = () => {
+      fetch('/temperature')
+        .then(results => {
+          return results.text()
+        })
+        .then(text => {
+          const temperatureDisplay = 
+    document.getElementById('temperature-display')
+          temperatureDisplay.innerHTML = text
+        })
+    }
 
     /*
-    First, we instantiate the first promise, which call the 
-    API at /temperature of our server
+    Make a similar function to fetch humidity
     */
-    fetch('/temperature')
-    .then(results => {
-      /*
-      results.text() returns another promise, which resolves 
-    to the text response we receive from the API
-      */
-      return results.text()
-    })
-    .then(text => {
-      /*
-       This "text" variable is the response that the server 
-    gives us. Logging it on the console will show you " 
-      <strong>10.0</strong>°C"
-      */
-      console.log(text)
-    });
+    const fetchHumidity = () => {
+      fetch('/humidity')
+        .then(results => {
+          return results.text()
+        })
+        .then(text => {
+          const temperatureDisplay = 
+    document.getElementById('humidity-display')
+          temperatureDisplay.innerHTML = text
+        })
+    }
+
+    /*
+    Call the above defined functions at regular intervals
+    */
+    setInterval(() => {
+      fetchTemperature()
+      fetchHumidity()
+    }, 2000)
     
