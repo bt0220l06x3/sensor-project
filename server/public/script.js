@@ -48,8 +48,7 @@ console.log('Executing client side javascript...');
      * Get the context of the temperature canvas element
      */
      const temperatureCanvasCtx = 
-     document.getElementById('temperature-
-     chart').getContext('2d')
+     document.getElementById('temperature-chart').getContext('2d')
 
     /**
      * Create a new chart on the context we just instantiated
