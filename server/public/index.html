@@ -45,6 +45,33 @@
         </div>
 
       </div>
+        
+          <!--
+      There's a new element with the container class. The 
+     chart container will inherit the style of the previous  
+    displays.
+      -->
+      <div class="container">
+          <div>
+            <!--
+            The 100% width implies that we want the canvas
+     element to take the full width of its container, which 
+     in this case remains the same width as the sensor values 
+     display
+
+            The height is fixed. Its generally good practice
+     to have relative widths and absolute heights in a 
+     downward scrolling document
+             -->
+            <canvas id="temperature-chart" width="100%" 
+     height="400px">
+          </div>
+          <div>
+            <canvas id="humidity-chart" width="100%" 
+     height="400px">
+          </div>
+      </div>
+      
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
       <script src="script.js"></script>
     </body>
