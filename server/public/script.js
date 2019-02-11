@@ -12,13 +12,13 @@ console.log('Executing client side javascript...');
     const fetchTemperature = () => {
       fetch('/temperature')
         .then(results => {
-          return results.text()
+          return results.text();
         })
         .then(text => {
           const temperatureDisplay = 
-    document.getElementById('temperature-display')
-          temperatureDisplay.innerHTML = text
-        })
+    document.getElementById('temperature-display');
+          temperatureDisplay.innerHTML = text;
+        });
     }
 
     /*
@@ -27,20 +27,20 @@ console.log('Executing client side javascript...');
     const fetchHumidity = () => {
       fetch('/humidity')
         .then(results => {
-          return results.text()
+          return results.text();
         })
         .then(text => {
           const temperatureDisplay = 
     document.getElementById('humidity-display')
-          temperatureDisplay.innerHTML = text
-        })
+          temperatureDisplay.innerHTML = text;
+        });
     }
 
     /*
     Call the above defined functions at regular intervals
     */
     setInterval(() => {
-      fetchTemperature()
-      fetchHumidity()
-    }, 2000)
+      fetchTemperature();
+      fetchHumidity();
+    }, 2000);
     
