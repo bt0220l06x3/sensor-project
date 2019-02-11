@@ -21,8 +21,8 @@ const getSensorReadings = require('./get-sensor-readings');
         /*
         Set the values of the cache on receiving new readings
         */
-        cache.temperature = temperature
-        cache.humidity = humidity
+        cache.temperature = temperature;
+        cache.humidity = humidity;
       })
     }, 2000)
 
@@ -31,5 +31,5 @@ const getSensorReadings = require('./get-sensor-readings');
     values, and don't make a call to the sensor interface 
     everytime
     */
-    module.exports.getTemperature = () => cache.temperature
-    module.exports.getHumidity = () => cache.humidity
+    module.exports.getTemperature = () => cache.temperature;
+    module.exports.getHumidity = () => cache.humidity;
