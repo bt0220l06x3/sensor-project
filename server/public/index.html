@@ -7,10 +7,43 @@
       <!--<link href="css/style.css" rel="stylesheet">-->
     </head>
     <body>
-        <p>Temperature :</p>
-        <p id="temperature-display">Loading temperature...</p>
-        <p>Humidity :</p>
-        <p id="humidity-display">Loading humidity...</p>
-        <script src="script.js"></script>
+      <!--
+        This is our "Title" element. It will occupy the 
+    entire top band of our application
+      -->
+      <header>Sensor Dashboard</header>
+
+      <!--
+        We make a container structure to encapsulate our 
+    temperature and humidity displays
+      -->
+      <div class="container">
+
+        <!--
+          Here, we define the structure of each display
+        -->
+        <div class="temperature">
+          <!--
+            Add subsections for the title, value, and unit.
+            We give each section a class name, because we  
+    want to style each one differently (give a larger size to  
+    value as opposed to title and unit)
+          -->
+          <p class="title">Temperature</p>
+          <p class="value" id="temperature-display">Loading... </p>
+          <p class="unit" >°C</p>
+        </div>
+
+        <!--
+          The humidity display has a similar structure to the 
+    temperature display
+        -->
+        <div class="humidity">
+          <p class="title">Humidity</p>
+          <p class="value" id="humidity-display">Loading... </p>
+          <p class="unit" >%</p>
+        </div>
+
+      </div>
     </body>
 </html>
