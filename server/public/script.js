@@ -54,7 +54,7 @@ console.log('Executing client side javascript...');
        labels: [],
        datasets: [{
           data: [],
-          backgroundColor: 'rgba(255, 205, 210, 0.5)'
+          backgroundColor: 'rgba(197, 202, 203, 0.5)'
         }]
       },
       options: {
