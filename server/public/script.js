@@ -10,7 +10,7 @@ console.log('Executing client side javascript...');
     function
     */
     const fetchTemperature = () => {
-      fetch('/humidity')   
+      fetch('/temperature')   
         .then(results => {
            /**
            * We want the results converted to json, so we use 
