@@ -80,6 +80,30 @@ console.log('Executing client side javascript...');
       }
     }
 
+       /**
+     * Get the context of the temperature canvas element
+     */
+     const temperatureCanvasCtx = 
+     document.getElementById('temperature-chart').getContext('2d')
+
+    /**
+     * Create a new chart on the context we just instantiated
+    */
+    const temperatureChart = new Chart(temperatureCanvasCtx, 
+       temperatureChartConfig);
+
+       /**
+     * Get the context of the temperature canvas element
+     */
+     const humidityCanvasCtx = 
+     document.getElementById('humidity-chart').getContext('2d')
+
+    /**
+     * Create a new chart on the context we just instantiated
+    */
+    const humidityChart = new Chart(humidityCanvasCtx, 
+       humidityChartConfig);
+
     const pushData = (arr, value, maxLen) => {
       /*
       Push the new value into the array
@@ -196,26 +220,3 @@ console.log('Executing client side javascript...');
       fetchHumidity();
     }, 2000);
  
-       /**
-     * Get the context of the temperature canvas element
-     */
-     const temperatureCanvasCtx = 
-     document.getElementById('temperature-chart').getContext('2d')
-
-    /**
-     * Create a new chart on the context we just instantiated
-    */
-    const temperatureChart = new Chart(temperatureCanvasCtx, 
-       temperatureChartConfig);
-
-       /**
-     * Get the context of the temperature canvas element
-     */
-     const humidityCanvasCtx = 
-     document.getElementById('humidity-chart').getContext('2d')
-
-    /**
-     * Create a new chart on the context we just instantiated
-    */
-    const humidityChart = new Chart(humidityCanvasCtx, 
-       humidityChartConfig);
