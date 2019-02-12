@@ -1,5 +1,61 @@
 console.log('Executing client side javascript...');
 
+    /*
+     Here, we take the configuration out and declare it as a
+     variable first.
+   */
+    const temperatureChartConfig = {
+      type: 'line',
+      data: {
+        /*
+        For our actual data, we will not have any readings 
+    initially
+        */
+       labels: [],
+       datasets: [{
+          data: [],
+          backgroundColor: 'rgba(255, 205, 210, 0.5)'
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        /*
+        Add in the range for the Y-axis. Where I live, the 
+     temperature varies from 15-35 °C
+        With a 5 °C buffer range, that gives us a minimum 
+     value of 10 and maximum of 40
+        */
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMin: 10,
+              suggestedMax: 40
+            }
+          }]
+        }
+      }
+    }
+
+    const pushData = (arr, value, maxLen) => {
+      /*
+      Push the new value into the array
+     */
+      arr.push(value)
+
+      /*
+      If the length of the array is greater than the maximum
+      length allowed, push the first element out (through the
+     Array#shift method)
+      */
+      if (arr.length > maxLen) {
+        arr.shift()
+      }
+    }
+
 /*
      The fetch API uses a promise based syntax. It may look a  
     little weird if you're seeing it for the first time, but    
@@ -20,12 +76,42 @@ console.log('Executing client side javascript...');
           return results.json()
         })
         .then(data => {
-          /**
-           * In our server API route handler, the format of 
-    returned data was an object with a `value` property.
-           * The value of the sensor reading is therefore 
-    available in `data.value`
-           */
+          /*
+          Note the time when the reading is obtained,
+          and convert it to hh:mm:ss format
+          */
+          const now = new Date()
+          const timeNow = now.getHours() + ':' + 
+    now.getMinutes() + ':' + now.getSeconds()
+
+          /*
+          Add the data to the chart dataset
+
+          The x-axis here is time, with the time of 
+    measurement added as its value. Since it is measure in 
+    regular intervals,
+          we do not need to scale it, and can assume a 
+    uniform regular interval
+          The y-axis is temperature, which is stored in 
+    `data.value`
+
+          The data is being pushed directly into the 
+    configuration we described above.
+          A maximum length of 10 is maintained. Which means 
+    that after 10 readings are filled in the dataset, the 
+    older readings will start being pushed out.
+          */
+           pushData(temperatureChartConfig.data.labels,
+     timeNow, 10)
+          pushData(temperatureChartConfig.data.datasets[0]
+     .data, data.value, 10)
+
+          /*
+          `temperatureChart` is our ChartJs instance. The 
+    `update` method looks for changes in the dataset and 
+    axes, and animates and updates the chart accordingly.
+          */
+          temperatureChart.update()
           const temperatureDisplay = 
     document.getElementById('temperature-display')
           /**
@@ -69,43 +155,6 @@ console.log('Executing client side javascript...');
      * Create a new chart on the context we just instantiated
     */
     const temperatureChart = new Chart(temperatureCanvasCtx, 
-    {
-      /**
-       * Were going to show the ongoing temperature as a line 
-    chart
-       */
-      type: 'line',
-      data: {
-        /**
-         * This is mock data.
-         * The labels, which will form our x-axis, are 
-     supposed to represent the time at which each reading was 
-     taken.
-         * Finally, we add the dataset, whose data is an 
-     array of temperature values.
-         * The background color is set to the same value as 
-     the earlier display, with some added transparency (which 
-     is why the 'rgba' representation is used)
-         */
-        labels: ['10:30', '10:31', '10:32', '10:33'],
-        datasets: [{
-          data: [12, 19, 23, 17],
-          backgroundColor: 'rgba(255, 205, 210, 0.5)'
-        }]
-      },
-      options: {
-        /**
-         * There is no need for a legend since there is only 
-    one dataset plotted
-         * The 'responsive' and 'maintainAspectRatio' options 
-    are set so that the chart takes the width and height of 
-    the canvas, and does not set it on its own.
-         */
-        legend: {
-          display: false
-        },
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    });
+       temperatureChartConfig);
+
     
