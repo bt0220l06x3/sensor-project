@@ -15,11 +15,24 @@ const getCachedSensorReadings = require('./get-cached-sensor-readings');
     'public')));
 
 app.get('/temperature', function(req, res) {
-  res.send('<strong>' + getCachedSensorReadings.getTemperature().toFixed(1) + '</strong>');
+     /**
+       * The express response object comes with a built in 
+    `json` method
+       * This automatically converts its first argument into 
+    a JSON string, and sends it along with the content type 
+    headers as a response.
+       */
+      res.json({
+        value: 
+    getCachedSensorReadings.getTemperature().toFixed(1)
+      })
 });
 
 app.get('/humidity', function(req, res) {
-  res.send('<strong>' + getCachedSensorReadings.getHumidity().toFixed(1) + '</strong>');
+      res.json({
+        value: 
+    getCachedSensorReadings.getHumidity().toFixed(1)
+      })
 });
 
 app.listen(3000, function(){
