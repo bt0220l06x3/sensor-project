@@ -72,8 +72,8 @@ console.log('Executing client side javascript...');
         scales: {
           yAxes: [{
             ticks: {
-              suggestedMin: 10,
-              suggestedMax: 40
+              suggestedMin: 30,
+              suggestedMax: 90
             }
           }]
         }
