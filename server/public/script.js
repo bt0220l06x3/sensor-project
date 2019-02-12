@@ -40,6 +40,46 @@ console.log('Executing client side javascript...');
       }
     }
 
+   /*
+     Here, we take the configuration out and declare it as a
+     variable first.
+   */
+    const humidityChartConfig = {
+      type: 'line',
+      data: {
+        /*
+        For our actual data, we will not have any readings 
+    initially
+        */
+       labels: [],
+       datasets: [{
+          data: [],
+          backgroundColor: 'rgba(255, 205, 210, 0.5)'
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        /*
+        Add in the range for the Y-axis. Where I live, the 
+     temperature varies from 15-35 °C
+        With a 5 °C buffer range, that gives us a minimum 
+     value of 10 and maximum of 40
+        */
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMin: 10,
+              suggestedMax: 40
+            }
+          }]
+        }
+      }
+    }
+
     const pushData = (arr, value, maxLen) => {
       /*
       Push the new value into the array
@@ -131,6 +171,17 @@ console.log('Executing client side javascript...');
           return results.json();
         })
         .then(data => {
+          const now = new Date()
+          const timeNow = now.getHours() + ':' + 
+    now.getMinutes() + ':' + now.getSeconds()
+ 
+          pushData(humidityChartConfig.data.labels,
+     timeNow, 10)
+          pushData(humidityChartConfig.data.datasets[0]
+     .data, data.value, 10)
+
+          humidityChart.update()
+    
           const temperatureDisplay = 
     document.getElementById('humidity-display')
           temperatureDisplay.innerHTML = '<strong>' + data.value  + '</strong>';
@@ -157,4 +208,14 @@ console.log('Executing client side javascript...');
     const temperatureChart = new Chart(temperatureCanvasCtx, 
        temperatureChartConfig);
 
-    
+       /**
+     * Get the context of the temperature canvas element
+     */
+     const humidityCanvasCtx = 
+     document.getElementById('humidity-chart').getContext('2d')
+
+    /**
+     * Create a new chart on the context we just instantiated
+    */
+    const humidityChart = new Chart(humidityCanvasCtx, 
+       humidityChartConfig);
