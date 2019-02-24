@@ -212,6 +212,65 @@ console.log('Executing client side javascript...');
         });
     }
 
+    const fetchTemperatureHistory = () => {
+      /**
+       * Call the APi we created
+       */
+      fetch('/temperature/history')
+        .then(results => {
+          return results.json()
+        })
+        .then(data => {
+          data.forEach(reading => {
+            /**
+             * For each reading present in the "data" array,
+             * convert the time to the ISO Z format accepted 
+     by the javascript Date object
+             * Format the time and push data on to the chart,
+      similar to the previous API calls
+             */
+            const time = new Date(reading.createdAt + 'Z')
+            const formattedTime =
+            time.getHours() + ':' + time.getMinutes() + ':' +
+     time.getSeconds()
+            pushData(temperatureChartConfig.data.labels, 
+    formattedTime, 10)
+            pushData(temperatureChartConfig.data.datasets[0]
+    .data, reading.value, 10)
+          })
+
+          /**
+           * Finally, update the chart after all readings have
+     been pushed
+           */
+          temperatureChart.update()
+        })
+    }
+
+    fetchTemperatureHistory()
+
+    const fetchHumidityHistory = () => {
+      fetch('/humidity/history')
+        .then(results => {
+          return results.json()
+        })
+        .then(data => {
+          data.forEach(reading => {
+            const time = new Date(reading.createdAt + 'Z')
+            const formattedTime =
+            time.getHours() + ':' + time.getMinutes() + ':' +
+     time.getSeconds()
+            pushData(humidityChartConfig.data.labels,
+        formattedTime, 10)
+           pushData(humidityChartConfig.data.datasets[0].data,
+      reading.value, 10)
+          })
+          humidityChart.update()
+        })
+    }
+
+    fetchHumidityHistory()
+
     /*
     Call the above defined functions at regular intervals
     */
