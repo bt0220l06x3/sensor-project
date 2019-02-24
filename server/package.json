@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "node-dht-sensor": "0.0.34"
+    "node-dht-sensor": "0.0.34",
+    "sqlite3": "^4.0.6"
   }
 }
