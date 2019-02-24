@@ -261,11 +261,10 @@ console.log('Executing client side javascript...');
       name = name.replace(/[\[\]]/g, '\\$&')
       const regex = new RegExp('[?&]' + name + 
         '(=([^&#]*)|&|#|$)')
-       const results = regex.exec(url)
+      const results = regex.exec(url)
       if (!results) return null
       if (!results[2]) return ''
-      return decodeURIComponent(results[2].replace(/\+/g, '
-      '))
+      return decodeURIComponent(results[2].replace(/\+/g, ''))
     }
 
     const fetchTemperatureRange = () => {
@@ -316,8 +315,7 @@ console.log('Executing client side javascript...');
          return results.json()
        })
         .then(data => {
-          temperatureDisplay.innerHTML = '<strong>' + 
-    data.value + '</strong>'
+          temperatureDisplay.innerHTML = '<strong>' + data.value + '</strong>'
         })
     }
 
@@ -391,8 +389,7 @@ console.log('Executing client side javascript...');
          return results.json()
        })
         .then(data => {
-          hunidityDisplay.innerHTML = '<strong>' + 
-    data.value + '</strong>'
+          hunidityDisplay.innerHTML = '<strong>' + data.value + '</strong>'
         })
     }
 
