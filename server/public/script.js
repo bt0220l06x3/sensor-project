@@ -1,5 +1,8 @@
 console.log('Executing client side javascript...');
 
+const temperatureDisplay = document.getElementById('temperature-display')
+const hunidityDisplay = document.getElementById('humidity-display')
+    
     /*
      Here, we take the configuration out and declare it as a
      variable first.
@@ -176,8 +179,7 @@ console.log('Executing client side javascript...');
     axes, and animates and updates the chart accordingly.
           */
           temperatureChart.update()
-          const temperatureDisplay = 
-    document.getElementById('temperature-display')
+
           /**
            * We add in the HTML tags on the front end script 
     this time, leaving the backend to only provide us data
@@ -206,9 +208,8 @@ console.log('Executing client side javascript...');
 
           humidityChart.update()
     
-          const temperatureDisplay = 
-    document.getElementById('humidity-display')
-          temperatureDisplay.innerHTML = '<strong>' + data.value  + '</strong>';
+
+          hunidityDisplay.innerHTML = '<strong>' + data.value  + '</strong>';
         });
     }
 
@@ -264,7 +265,7 @@ console.log('Executing client side javascript...');
       const results = regex.exec(url)
       if (!results) return null
       if (!results[2]) return ''
-      return decodeURIComponent(results[2].replace(/\+/g, ''))
+      return decodeURIComponent(results[2].replace(/\+/g, ' '))
     }
 
     const fetchTemperatureRange = () => {
