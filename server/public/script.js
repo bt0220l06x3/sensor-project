@@ -249,6 +249,78 @@ console.log('Executing client side javascript...');
 
     fetchTemperatureHistory()
 
+    /**
+     * We first define a function to extract the parameters
+     from the request query.
+     * You do not need to be concerned too much with its 
+    implementation, although you could always study it as an 
+    excercise.
+     */
+    function getParameterByName (name) {
+      const url = window.location.href
+      name = name.replace(/[\[\]]/g, '\\$&')
+      const regex = new RegExp('[?&]' + name + 
+        '(=([^&#]*)|&|#|$)')
+       const results = regex.exec(url)
+      if (!results) return null
+      if (!results[2]) return ''
+      return decodeURIComponent(results[2].replace(/\+/g, '
+      '))
+    }
+
+    const fetchTemperatureRange = () => {
+      /**
+       * The getParameterByName function is used to get the
+       "start" and "end"
+       * parameters from the query
+       */
+      const start = getParameterByName('start')
+      const end = getParameterByName('end')
+
+      /**
+       * These parameters are then passed on to make AJAX 
+     requests to get the range of
+       * readings from the server
+       */
+      fetch(`/temperature/range?start=${start}&end=${end}`)
+         .then(results => {
+          return results.json()
+        })
+        .then(data => {
+          data.forEach(reading => {
+            /**
+             * These readings are pushed to the chart
+             */
+            const time = new Date(reading.createdAt + 'Z')
+            const formattedTime =
+              time.getHours() + ':' + time.getMinutes() + ':' 
+     + time.getSeconds()
+             pushData(temperatureChartConfig.data.labels,
+     formattedTime, 10)
+           pushData(
+               temperatureChartConfig.data.datasets[0].data,
+             reading.value,
+              10
+           )
+          })
+          temperatureChart.update()
+        })
+  
+      /**
+       * We also use this information to fetch the average by 
+    calling the required
+       * API, and updating the reading display with the result
+       */
+      fetch(`/temperature/average?start=${start}&end=${end}`)
+        .then(results => {
+         return results.json()
+       })
+        .then(data => {
+          temperatureDisplay.innerHTML = '<strong>' + 
+    data.value + '</strong>'
+        })
+    }
+
     const fetchHumidityHistory = () => {
       fetch('/humidity/history')
         .then(results => {
@@ -271,11 +343,79 @@ console.log('Executing client side javascript...');
 
     fetchHumidityHistory()
 
-    /*
-    Call the above defined functions at regular intervals
-    */
-    setInterval(() => {
-      fetchTemperature();
-      fetchHumidity();
-    }, 2000);
+    const fetchHumidityRange = () => {
+      /**
+       * The getParameterByName function is used to get the
+       "start" and "end"
+       * parameters from the query
+       */
+      const start = getParameterByName('start')
+      const end = getParameterByName('end')
+
+      /**
+       * These parameters are then passed on to make AJAX 
+     requests to get the range of
+       * readings from the server
+       */
+      fetch(`/hunidity/range?start=${start}&end=${end}`)
+         .then(results => {
+          return results.json()
+        })
+        .then(data => {
+          data.forEach(reading => {
+            /**
+             * These readings are pushed to the chart
+             */
+            const time = new Date(reading.createdAt + 'Z')
+            const formattedTime =
+              time.getHours() + ':' + time.getMinutes() + ':' 
+     + time.getSeconds()
+             pushData(humidityChartConfig.data.labels,
+     formattedTime, 10)
+           pushData(
+               hunidityChartConfig.data.datasets[0].data,
+             reading.value,
+              10
+           )
+          })
+          hunidityChart.update()
+        })
+  
+      /**
+       * We also use this information to fetch the average by 
+    calling the required
+       * API, and updating the reading display with the result
+       */
+      fetch(`/hunidity/average?start=${start}&end=${end}`)
+        .then(results => {
+         return results.json()
+       })
+        .then(data => {
+          hunidityDisplay.innerHTML = '<strong>' + 
+    data.value + '</strong>'
+        })
+    }
+
+if (!getParameterByName('start') && !getParameterByName('end')) {
+  /**
+   * The fetchTemperature and fetchHumidity calls are now moved here
+   * and are called only when the "start" and "end"
+    parametes are not present in the query
+   * In this case, we will be showing the live reading implementation
+  */
+  setInterval(() => {
+    fetchTemperature()
+    fetchHumidity()
+  }, 2000)
+  fetchHumidityHistory()
+  fetchTemperatureHistory()
+} else {
+  /**
+   * If we do have these parameters, we will only be 
+showing the range of readings requested by calling the  
+functions we defined in this section
+   */
+  fetchHumidityRange()
+  fetchTemperatureRange()
+}
  
