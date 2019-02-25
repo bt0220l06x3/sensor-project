@@ -1,7 +1,7 @@
 console.log('Executing client side javascript...');
 
 const temperatureDisplay = document.getElementById('temperature-display')
-const hunidityDisplay = document.getElementById('humidity-display')
+const humidityDisplay = document.getElementById('humidity-display')
     
     /*
      Here, we take the configuration out and declare it as a
@@ -356,7 +356,7 @@ const hunidityDisplay = document.getElementById('humidity-display')
      requests to get the range of
        * readings from the server
        */
-      fetch(`/hunidity/range?start=${start}&end=${end}`)
+      fetch(`/humidity/range?start=${start}&end=${end}`)
          .then(results => {
           return results.json()
         })
@@ -385,7 +385,7 @@ const hunidityDisplay = document.getElementById('humidity-display')
     calling the required
        * API, and updating the reading display with the result
        */
-      fetch(`/hunidity/average?start=${start}&end=${end}`)
+      fetch(`/humidity/average?start=${start}&end=${end}`)
         .then(results => {
          return results.json()
        })
