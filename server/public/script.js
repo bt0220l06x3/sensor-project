@@ -372,7 +372,7 @@ const humidityDisplay = document.getElementById('humidity-display')
              pushData(humidityChartConfig.data.labels,
      formattedTime, 10)
            pushData(
-               hunidityChartConfig.data.datasets[0].data,
+               humidityChartConfig.data.datasets[0].data,
              reading.value,
               10
            )
@@ -390,7 +390,7 @@ const humidityDisplay = document.getElementById('humidity-display')
          return results.json()
        })
         .then(data => {
-          hunidityDisplay.innerHTML = '<strong>' + data.value + '</strong>'
+          humidityDisplay.innerHTML = '<strong>' + data.value + '</strong>'
         })
     }
 
