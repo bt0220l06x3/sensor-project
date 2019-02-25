@@ -209,7 +209,7 @@ const humidityDisplay = document.getElementById('humidity-display')
           humidityChart.update()
     
 
-          hunidityDisplay.innerHTML = '<strong>' + data.value  + '</strong>';
+          humidityDisplay.innerHTML = '<strong>' + data.value  + '</strong>';
         });
     }
 
