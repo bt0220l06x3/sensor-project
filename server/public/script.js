@@ -377,7 +377,7 @@ const humidityDisplay = document.getElementById('humidity-display')
               10
            )
           })
-          hunidityChart.update()
+          humidityChart.update()
         })
   
       /**
