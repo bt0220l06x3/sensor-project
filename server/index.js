@@ -110,6 +110,51 @@ app.get('/humidity/history', function (req, res) {
       })
     })
 
+    app.get('/humidity/range', function (req, res) {
+      /**
+       * Here, the "start" and "end" datetimes for the range
+     of readings are
+       * expected to be received through the query parameters.
+     This is spllied as part
+       * of the URL request
+       */
+      const {start, end} = req.query
+
+      /**
+       * The "fetchReadingsBetweenTime" method is called,
+     which returns an array of results, which we return as
+     JSON to the client side
+       */
+      databaseOperations.fetchReadingsBetweenTime
+    ('humidity', start, end, (err, results) => {
+        if (err) {
+          console.error(err)
+          return res.status(500).end()
+        }
+       res.json(results)
+      })
+    })
+
+    app.get('/humidity/average', function (req, res) {
+      const {start, end} = req.query
+       databaseOperations.getAverageOfReadingsBetweenTime
+    ('humidity', start, end, (err, results) => {
+        if (err) {
+          console.error(err)
+          return res.status(500).end()
+        }
+        /**
+         * This is similar to the earlier API, except that we
+     just return a singular value.
+         * The signature is therefore more reminisent of the 
+    "/temperature" API
+         */
+        res.json({
+          value: results['avg(value)'].toFixed(1)
+        })
+      })
+    })
+
 app.listen(3000, function(){
 	console.log('Server listening on port 3000');
 });
